@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Attivita";
+
+}
+@using Microsoft.AspNetCore.Identity;
+@using CameranaVillage.DB.Entities;
+@inject UserManager<User> UserManager
+
+
+@model List<AttivitaModel>
+
+
+<div class="text-center my-5">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+
+        @foreach (AttivitaModel a in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/IMG/@(a.IdAttivita).jpg" class="card-img-top" alt="@(a.DescrizioneAttivita)">
+                    <div class="card-body">
+                        <h5 class="card-title">@a.NomeAttivita</h5>
+                        <p class="card-text">Descrizione: @a.DescrizioneAttivita</p>
+                        <p class="card-text">Data Inizio: @a.DataInizio</p>
+                        <p class="card-text">Data Fine: @a.DataFine</p>
+                        <p class="card-text">Numero Posti: @a.NumeroPosti</p>
+                        <p class="card-text">Prezzo: @a.PrezzoAttivita</p>
+                        @if (User.IsInRole("Admin"))
+                        {
+                        }
+                        else
+                        {
+                            @if (a.NumeroPosti > 0)
+                            {
+                                <button class="btn btn-success" onclick="prenotaAttivita('@UserManager.GetUserId(User)', '@a.IdAttivita')">Prenota</button>
+                            }
+                            else
+                            {
+                                <h4>Sold out!</h4>
+                            }
+                        }
+
+                    </div>
+                    <br>
+                </div>
+            </div>
+        }
+    </div>
+</div>

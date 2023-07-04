@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Gestione utenti";
+}
+@using Microsoft.AspNetCore.Identity;
+@using CameranaVillage.DB.Entities;
+
+@inject CameranaVillage.DB.DBContext userDBContext
+
+@model CameranaVillage.Models.UsersAndRolesViewModel
+
+<div class="text-center">
+    
+    <h1 class="my-5">Gestione utenti</h1>
+    <div class="container">
+        @foreach (User user in Model.Users)
+        {
+            <div class="row">
+                <div class="col-12" style="text-align:left">
+                    <h3>@user.UserName</h3>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div>ID: @user.Id</div>
+                                <div>Email: @user.Email</div>
+                                @{
+                                    string DeleteUserButtonId = user.Id + "DeleteUserButton";
+                                    <button id="@DeleteUserButtonId" class="btn btn-danger btn-sm" onclick="showConfirmationModalForUsers('@Url.Action("DeleteUser", "Home")', { addOrDelete:'Delete', userId: '@user.Id' });">Delete User</button>
+                                    string EditUserButtonId = user.Id + "EditUserButton";
+                                    <button id="@EditUserButtonId" class="btn btn-warning btn-sm" onclick="showConfirmationModalForUsers('@Url.Action("EditUser", "Home")', { addOrDelete:'Edit', userId: '@user.Id' });">Edit User</button>
+
+                                }
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <!--<div><a class="navItem" asp-area="" asp-controller="UserDetails" asp-action="Index" asp-route-userID="@user.Id">Details</a></div>-->
+        }
+        <div class="row">
+            @*<div class="col-12">
+                <button id="CreateUserButton" class="btn btn-success btn-sm" onclick="showConfirmationModalForUsers('@Url.Action("CreateUser", "Home")', { addOrDelete:'Add' });">Create User</button>
+            </div>*@
+        </div>
+    </div>
+</div>

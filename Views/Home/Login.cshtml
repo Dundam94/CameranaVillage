@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model LoginModel
+@using Microsoft.AspNetCore.Identity
+@using CameranaVillage.DB.Entities
+@inject SignInManager<User> SignInManager //questo è come fare dep inj nelle views
+@if (!SignInManager.IsSignedIn(User)) //se non avessi fatto la inject sopra qui avrebbe dato errore, perché signinmamnager mi dà le informazioni su chi è loggato
+{
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form asp-action="Login" asp-controller="Home" method="post" style="text-align: center;">
+                    <div class="form-group">
+                        <label asp-for="@Model.UserName">Username</label>
+                        <input asp-for="@Model.UserName" class="form-control" placeholder="Username" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Password">Password</label>
+                        <input asp-for="@Model.Password" class="form-control" type="password" placeholder="Password" />
+                    </div>
+                    <button type="submit" class="btn btn-danger">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div>Sei già loggato</div>
+}

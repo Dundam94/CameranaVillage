@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Gestione attività";
+}
+@using Microsoft.AspNetCore.Identity;
+@using CameranaVillage.DB.Entities;
+
+@inject CameranaVillage.DB.DBContext userDBContext
+
+@model List<PrenotazioneAttivitaUtenteModel>
+
+<div class="text-center">
+    <h1 class="my-5">Gestione Attività</h1>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Nome Attivita</th>
+                <th>Descrizione Attivita</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attivita in Model)
+            {
+                <tr>
+                    <td>@attivita.UserName</td>
+                    <td>@attivita.NomeAttivita</td>
+                    <td>@attivita.DescrizioneAttivita</td>
+                    <td>@attivita.DataInizio</td>
+                    <td>@attivita.DataFine</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteAttivita('@attivita.IdPrenotazioneAttivita')">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
